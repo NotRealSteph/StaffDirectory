@@ -9,12 +9,34 @@ import {
 import { Departments} from "../data/staffList";
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreenNavigationProp, IStaff } from '../src/types';
+import { getStaffByName } from "../data/staffServices";
 
 const RenderListItem = ({data}: {data:IStaff}) =>{
     const navigation = useNavigation<HomeScreenNavigationProp>();
     const [PressedState, setPressedState] = useState<boolean>(false);
     const [PictureHeight, setPictureHeight] = useState<number>(100);
     const [PictureWidth, setPictureWidth] = useState<number>(100);
+
+    const handleLongPress = () => {
+      getStaffByName(data.name).then((data) => {
+        if (data) {
+          navigation.navigate("Details", {
+            id: data.id,
+            name: data.name,
+            phone: data.phone,
+            department: data.department,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            zip: data.zip,
+            country: data.country,
+            description: data.description,
+          });
+        } else {
+          console.log("not found");
+        }
+      });
+    };
 
     return (
         <Pressable
@@ -35,18 +57,7 @@ const RenderListItem = ({data}: {data:IStaff}) =>{
               setPictureWidth(100);
             }
           }}
-          onLongPress={() =>
-            navigation.navigate('Details', {
-                name: data.name,
-                phone: data.phone,
-                department: data.department,
-                address: data.address,
-                city: data.city,
-                state: data.state,
-                zip: data.zip,
-                country: data.country,
-            })
-          }
+          onLongPress={handleLongPress}
         >
           <View style={styles.ItemBox}>
             {/*profile picture*/}
@@ -137,6 +148,13 @@ const styles = StyleSheet.create({
       alignItems: "center",
       flexWrap: "wrap",
       flexDirection: "row",
+    },
+    button: {
+      backgroundColor: "#DDDDDD",
+      flex: 1,
+      marginTop: 20,
+      height: "49%",
+      marginRight: 5,
     },
   });
 

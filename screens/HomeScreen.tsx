@@ -6,12 +6,23 @@ import {
   FlatList,
   View,
   ListRenderItem,
+  ActivityIndicator,
 } from "react-native";
-import {  StaffData } from "../data/staffList";
+import { getStaffList } from '../data/staffServices';
 import { IStaff} from '../src/types';
-import React from 'react';
+import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const [staffData, setStaffData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useFocusEffect(React.useCallback(() => {
+    getStaffList()
+      .then((data) => {setStaffData(data); console.log("its done");})
+      .catch((error) => { console.error(error) })
+      .finally(() => setIsLoading(false));
+  }, []))
 
   const renderItem: ListRenderItem<IStaff> = ({item}) => <RenderListItem data={item} />;
 
@@ -19,10 +30,12 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <Header />
             <View style={styles.body}>
-              <FlatList 
-              data={StaffData}
-              keyExtractor={(item:IStaff) => item.id} 
-              renderItem={renderItem}/>
+            {isLoading? <ActivityIndicator /> : (
+                <FlatList 
+                data={staffData}
+                keyExtractor={(item:IStaff) => item.id} 
+                renderItem={renderItem}/>
+                )}
             </View>
             <Footer />
       </View>

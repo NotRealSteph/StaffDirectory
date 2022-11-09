@@ -1,10 +1,10 @@
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RouteProp } from "@react-navigation/native";
-import { ListRenderItemInfo } from "react-native";
 
 export type HomeStackNavigatorParamList = {
   Home: undefined;
   Details: {
+    id: string;
     name: string;
     phone: string;
     department: string;
@@ -13,6 +13,7 @@ export type HomeStackNavigatorParamList = {
     state: string;
     zip: string;
     country: string;
+    description: string;
   };
   EnterDetails: undefined;
 };
@@ -27,6 +28,7 @@ export interface IStaff {
   state: string;
   zip: string;
   country: string;
+  description: string;
 }
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<

@@ -17,15 +17,12 @@ import DropDownPicker from "react-native-dropdown-picker";
 import {
   useFocusEffect,
   useNavigation,
-  useRoute,
 } from "@react-navigation/native";
 import {
   HomeScreenNavigationProp,
-  EnterDetailsScreenRouteProp,
   StaffArray,
-  ItemType,
 } from "../src/types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RenderSeperator from "../components/RenderSeperator";
 
 const EnterDetailsScreen = () => {

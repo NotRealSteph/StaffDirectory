@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import RenderListItem from "../components/RenderListItem";
 import {
   StyleSheet,
@@ -12,8 +11,6 @@ import { getDepartmentsList, getStaffList } from "../data/staffServices";
 import { IStaff, StaffArray } from "../src/types";
 import React, { useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import renderSeparator from "../components/RenderSeperator";
-
 const HomeScreen = () => {
   const [staffData, setStaffData] = useState<StaffArray>([]);
   const [filteredStaffData, setFilteredStaffData] = useState<StaffArray>([]);

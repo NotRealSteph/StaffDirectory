@@ -1,16 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
-import {  StyleSheet, View, Text, Pressable} from 'react-native';
-import { HomeScreenNavigationProp } from '../src/types';
+import { FC } from 'react';
+import {  StyleSheet, View, Text, Pressable, Alert} from 'react-native';
+import { HomeScreenNavigationProp, IFooterProps } from '../src/types';
 
-const ReturnToHomeFooter = () => {
+const ReturnToHomeFooter:FC<IFooterProps> = ({NoEdit}) => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
+
     return (
         <View style={styles.footer}>
             <View>
             <Pressable style={({pressed}) => [{
                         opacity: pressed? 0.5:  1,
                     },styles.button]}
-                    onPress={()=>navigation.navigate('Home')}>
+                    onPress={()=>{
+                        if(NoEdit==false){
+                            alert("You are returning to the staff directory. Any unsaved information will be lost");
+                            navigation.navigate('Home');
+                        }
+                        if(NoEdit==true){
+                            navigation.navigate('Home');
+                        }
+                        }}>
                         <Text> Return To Staff Directory</Text>
                     </Pressable>
             </View>
@@ -23,7 +33,8 @@ const styles = StyleSheet.create({
         height:100,
         flexDirection: 'row',
         justifyContent:'center',
-        paddingVertical:20
+        paddingVertical:20,
+        backgroundColor:'#c64c38'
   },
     button: {
         width:200,

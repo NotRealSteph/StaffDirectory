@@ -1,6 +1,6 @@
-import  Header  from '../components/Header';
-import Footer from '../components/Footer';
-import RenderListItem from '../components/RenderListItem';
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import RenderListItem from "../components/RenderListItem";
 import {
   StyleSheet,
   FlatList,
@@ -8,59 +8,78 @@ import {
   ListRenderItem,
   ActivityIndicator,
 } from "react-native";
-import { getStaffList } from '../data/staffServices';
-import { IStaff} from '../src/types';
-import React, { useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { getDepartmentsList, getStaffList } from "../data/staffServices";
+import { IStaff, StaffArray } from "../src/types";
+import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import renderSeparator from "../components/RenderSeperator";
 
 const HomeScreen = () => {
-  const [staffData, setStaffData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [staffData, setStaffData] = useState<StaffArray>([]);
+  const [filteredStaffData, setFilteredStaffData] = useState<StaffArray>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [departmentList, setDepartmentList] = useState<any[]>([]);
 
-  useFocusEffect(React.useCallback(() => {
-    getStaffList()
-      .then((data) => {setStaffData(data); console.log("its done");})
-      .catch((error) => { console.error(error) })
-      .finally(() => setIsLoading(false));
-  }, []))
+  useFocusEffect(
+    React.useCallback(() => {
+      getStaffList()
+        .then((data) => {
+          setIsLoading(true);
+          setStaffData(data);
+          setFilteredStaffData(data);
+        })
+        .catch((error) => console.error(error))
+        .finally(() => setIsLoading(false));
+    }, [])
+  );
 
-  const renderItem: ListRenderItem<IStaff> = ({item}) => <RenderListItem data={item} />;
+  useFocusEffect(
+    React.useCallback(() => {
+      getDepartmentsList()
+        .then((data) => {
+          setDepartmentList(data);
+        })
+        .catch((error) => console.error(error));
+    }, [])
+  );
 
-    return (
-        <View style={styles.container}>
-            <Header />
-            <View style={styles.body}>
-            {isLoading? <ActivityIndicator /> : (
-                <FlatList 
-                data={staffData}
-                keyExtractor={(item:IStaff) => item.id} 
-                renderItem={renderItem}/>
-                )}
-            </View>
-            <Footer />
+  const renderItem: ListRenderItem<IStaff> = ({ item }) => (
+    <RenderListItem data={item} />
+  );
+
+  return (
+    <View style={styles.container}>
+      <Header
+          staffData={staffData}
+          setFilteredStaffData={setFilteredStaffData}
+          departmentsList={departmentList}
+        />
+      <View style={styles.body}>
+        
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+          style={{marginTop:10}}
+            data={filteredStaffData}
+            keyExtractor={(item: IStaff) => item.id}
+            renderItem={renderItem}
+            initialNumToRender={10}
+          />
+        )}
       </View>
-    );
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    body: {
-      flex: 4,
-    },
-    ListItem: {
-      flex: 1,
-      margin: 5,
-      padding: 10,
-      backgroundColor: "red",
-    },
-    ItemBox: {
-      flex: 1,
-      alignItems: "center",
-      flexWrap: "wrap",
-      flexDirection: "row",
-    },
-  });
+  container: {
+    flex: 1,
+  },
+  body: {
+    flex: 4,
+    backgroundColor:"#c64c38"
+  }
+});
 
 export default HomeScreen;

@@ -12,6 +12,19 @@ export const getStaffList = () => {
   });
 };
 
+export const getDepartmentsList = () => {
+  const relUrl = "/staffdirectory/departments";
+
+  return fetch(new URL(relUrl, baseUrl)).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject("There was some error getting data from the service");
+  });
+};
+
+
 export const getStaffByName = (name:string) => {
   const relUrl = "/staffdirectory/staff?"
 

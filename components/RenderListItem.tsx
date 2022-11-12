@@ -61,12 +61,12 @@ const RenderListItem = ({data}: {data:IStaff}) =>{
         >
           <View style={styles.ItemBox}>
             {/*profile picture*/}
-            <View style={{ width: PictureWidth, height: PictureHeight }}>
+            <View style={{ width: 150, height: PictureHeight }}>
               <Image
                 source={require("../assets/profile.jpg")}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: PictureWidth,
+                  height: PictureHeight,
                   alignSelf: "flex-start",
                 }}
               />
@@ -79,14 +79,14 @@ const RenderListItem = ({data}: {data:IStaff}) =>{
                     alignItems: "center",
                   }}
                 >
-                  <Text>{data.name}</Text>
+                  <Text style={styles.listText}>{data.name}</Text>
                 </View>
                 <View
                   style={{
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ textAlign: "center" }}>
+                  <Text style={styles.listText}>
                     {Departments[parseInt(data.department)]}
                   </Text>
                 </View>
@@ -95,7 +95,7 @@ const RenderListItem = ({data}: {data:IStaff}) =>{
                     alignItems: "center",
                   }}
                 >
-                  <Text>{data.phone}</Text>
+                  <Text style={styles.listText}>{data.phone}</Text>
                 </View>
               </View>
               {/*view box for expanded view*/}
@@ -104,23 +104,23 @@ const RenderListItem = ({data}: {data:IStaff}) =>{
                   style={{
                     flex: 1,
                     alignItems: "center",
-                    backgroundColor: "yellow",
+                    backgroundColor: "#cb6d4f",
                   }}
                 >
                   <View>
-                    <Text>Address: {data.address}</Text>
+                    <Text style={styles.listText}>Address: {data.address}</Text>
                   </View>
                   <View>
-                    <Text>City: {data.city}</Text>
+                    <Text style={styles.listText}>City: {data.city}</Text>
                   </View>
                   <View>
-                    <Text>State: {data.state}</Text>
+                    <Text style={styles.listText}>State: {data.state}</Text>
                   </View>
                   <View>
-                    <Text>Zipcode: {data.zip}</Text>
+                    <Text style={styles.listText}>Zipcode: {data.zip}</Text>
                   </View>
                   <View>
-                    <Text>Country: {data.country}</Text>
+                    <Text style={styles.listText}>Country: {data.country}</Text>
                   </View>
                 </View>
               )}
@@ -137,17 +137,20 @@ const styles = StyleSheet.create({
     body: {
       flex: 4,
     },
+    listText: { textAlign: "center", color: '#262626',fontFamily:'Trebuchet' },
     ListItem: {
       flex: 1,
-      margin: 5,
+      marginVertical: 10,
+      marginHorizontal: 20,
       padding: 10,
-      backgroundColor: "red",
+      backgroundColor: "#cb6d4f",
     },
     ItemBox: {
       flex: 1,
       alignItems: "center",
       flexWrap: "wrap",
       flexDirection: "row",
+     
     },
     button: {
       backgroundColor: "#DDDDDD",

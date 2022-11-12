@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { getDepartmentsList, getStaffList } from "../data/staffServices";
 import { IStaff, StaffArray } from "../src/types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+
 const HomeScreen = () => {
   const [staffData, setStaffData] = useState<StaffArray>([]);
   const [filteredStaffData, setFilteredStaffData] = useState<StaffArray>([]);

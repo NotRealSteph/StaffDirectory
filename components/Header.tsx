@@ -5,9 +5,8 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ListViewBase,
 } from "react-native";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { getStaffByName } from "../data/staffServices";
 import { useNavigation } from "@react-navigation/native";
 import { HomeScreenNavigationProp, IheaderProps, IStaff } from "../src/types";
@@ -49,6 +48,7 @@ const Header: FC<IheaderProps> = ({ staffData, setFilteredStaffData, departments
         const {name, department, phone, address, city, state, zip, country } = item;
 
         // TRYING TO SEARCH BY DEPARTMENT NAME
+        // will try and do this later you know
         
         // const result = departmentsList.map((item, index) => {
         //   for (const key in item) {
@@ -68,16 +68,12 @@ const Header: FC<IheaderProps> = ({ staffData, setFilteredStaffData, departments
         //     return false
         // }
 
-
-
         if(name.toLowerCase().includes(formattedQuery) || phone.toLowerCase().includes(formattedQuery) || address.toLowerCase().includes(formattedQuery) || city.toLowerCase().includes(formattedQuery) || state.toLowerCase().includes(formattedQuery) || zip.toLowerCase().includes(formattedQuery) || country.toLowerCase().includes(formattedQuery) || department.includes(formattedQuery))
         return true;
         else
         return false;
       });
 
-      
-      
       setFilteredStaffData(filteredData);
       setQuery(text);
     } else {
